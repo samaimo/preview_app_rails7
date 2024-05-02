@@ -15,5 +15,6 @@ document.addEventListener('turbo:load', function(){
   fileField.addEventListener('change', function(e){
     console.log("input要素で値の変化が起きました");
     console.log(e.target.files[0]);
+    const file = e.target.files[0];
   });
 });
