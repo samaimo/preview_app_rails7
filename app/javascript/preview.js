@@ -38,5 +38,13 @@ document.addEventListener('turbo:load', function(){
     previewWrapper.appendChild(previewImage);
     previewList.appendChild(previewWrapper);
 
+    // 2枚目用のfile_fieldを作成
+    const newFileField = document.createElement('input');
+    newFileField.setAttribute('type', 'file');
+    newFileField.setAttribute('name', 'post[images][]');
+
+    // 生成したfile_fieldを表示
+    const fileFieldsArea = document.querySelector('.click-upload');
+    fileFieldsArea.appendChild(newFileField);
   });
 });
