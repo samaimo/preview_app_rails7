@@ -15,11 +15,15 @@ document.addEventListener('turbo:load', function(){
   fileField.addEventListener('change', function(e){
     console.log("input要素で値の変化が起きました");
     console.log(e.target.files[0]);
+
+    // data-index (何番目を操作しているか)を取得
+    const dataIndex = e.target.getAttribute('data-index');
+    console.log( dataIndex);
+
     // 古いプレビューが存在する場合は削除
     const alreadyPreview = document.querySelector('.preview');
     if (alreadyPreview) {
       alreadyPreview.remove();
-
     };
     
     const file = e.target.files[0];
@@ -28,6 +32,7 @@ document.addEventListener('turbo:load', function(){
     // 画像を表示するためのdiv要素を生成
     const previewWrapper = document.createElement('div');
     previewWrapper.setAttribute('class', 'preview');
+    previewWrapper.setAttribute('data-index', dataIndex);
 
     // 表示する画像を生成
     const previewImage = document.createElement('img');
