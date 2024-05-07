@@ -62,7 +62,11 @@ document.addEventListener('turbo:load', function(){
       deletePreviewImage.remove();
       const deleteFileField = document.querySelector(`input[type="file"][data-index="${dataIndex}"]`);
       deleteFileField.remove();
-    };
+
+    // 画像の枚数が最大のときに削除ボタンを押した場合、file_fieldを1つ追加する
+    const imageCount = document.querySelectorAll(".preview").length;
+    if (imageCount == imageLimits - 1) buildNewFileField();
+  };
 
   // input要素で値の変化が起きた際に呼び出される関数の中身
   const changedFileField = (e) => {
@@ -82,8 +86,18 @@ document.addEventListener('turbo:load', function(){
     // data-indexを使用して、既にプレビューが表示されているかを確認する
     const alreadyPreview = document.querySelector(`.preview[data-index="${dataIndex}"]`);
 
+    if (alreadyPreview) {
+      // クリックしたfile_fieldのdata-indexと、同じ番号のプレビュー画像が既に表示されている場合は、画像の差し替えのみを行う
+      const alreadyPreviewImage = alreadyPreview.querySelector("img");
+      alreadyPreviewImage.setAttribute("src", blob);
+      return null;
+    };
+
     buildPreviewImage(dataIndex, blob);
-    buildNewFileField();
+
+    // 画像の枚数制限に引っかからなければ、新しいfile_fieldを追加する
+    const imageCount = document.querySelectorAll(".preview").length;
+    if (imageCount < imageLimits) buildNewFileField();
   };
 
   // input要素を取得
